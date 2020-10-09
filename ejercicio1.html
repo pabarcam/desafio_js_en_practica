@@ -59,20 +59,18 @@
     })
     function validName(){
         let name = document.getElementById('nombre')
-        let patter = /[a-zA-Z]/
+        let patter = /[a-z\s\u00C0-\u00FF]+/i
+        let nameError = document.getElementsByClassName('errorNombre')[0]
         if(pattern.test(name)){
+            nameError.innerText = ''
             return true
         }else{
-            let nameError = document.getElementById('errornombre')
             nameError.innerText = 'Nombre malo'
         }
     }
     function validMessage(){
-s
     }
-
     function validSubject(){
-
     }
     </script>
 </body>
