@@ -12,7 +12,7 @@
             <h2>
                 Escríbenos !!!
             </h2>
-            <div class="resultado" style="color:green;font-style: italic">
+            <div id="resultado" style="color:green;font-style: italic">
             </div>
             <form id="formulario">
                 <div>
@@ -21,14 +21,14 @@
                             Nombre completo
                         </label>
                         <input id="nombre" type="text">
-                        <p class="errorNombre" style="color:red;font-style: italic;"></p>
+                        <p id="errorNombre" style="color:red;font-style: italic;"></p>
                     </div>
                     <div style="display: flex;flex-direction: column;">
                         <label>
                             Asunto
                         </label>
                         <input id="asunto" type="text">
-                        <p class="errorAsunto" style="color:red;font-style: italic;"></p>
+                        <p id="errorAsunto" style="color:red;font-style: italic;"></p>
                     </div>
                 </div>
                 <div style="display: flex;flex-direction: column;">
@@ -36,7 +36,7 @@
                         Mensaje
                     </label>
                     <textarea id="mensaje"></textarea>
-                    <p class="errorMensaje" style="color:red;font-style: italic;"></p>
+                    <p id="errorMensaje" style="color:red;font-style: italic;"></p>
                 </div>
                 <div>
                     <button id="botton" type="submit">
@@ -47,31 +47,57 @@
         </div>
     </div>
     <script>
-    // Escríbe aquí tu código
-    let form = document.getElementById("formulario")
-    form.addEventListener('submit', function(event){
-        event.preventDefault()
-        if(validName() && validSubject() && validMessage()){
+      let form = document.getElementById("formulario")
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault()
 
+        let result = document.getElementById('resultado')
+        const nameError = document.getElementById('errorNombre')
+        const subjectError = document.getElementById('errorAsunto')
+        const messageError = document.getElementById('errorMensaje')
+        const patt = /[a-z\s\u00C0-\u00FF]+/i
+        const name = document.getElementById("nombre").value
+        const subject = document.getElementById('asunto').value
+        const message = document.getElementById('mensaje').value
+
+        if(validName() && validSubject() && validMessage()){
+          result.innerText = 'Validación exitosa, ¡congratulations, my friend!'
+          nameError.style.display = 'none'
+          subjectError.style.display = 'none'
+          messageError.style.display = 'none'
         }else{
-            return false
+          return false
         }
-    })
-    function validName(){
-        let name = document.getElementById('nombre')
-        let patter = /[a-z\s\u00C0-\u00FF]+/i
-        let nameError = document.getElementsByClassName('errorNombre')[0]
-        if(pattern.test(name)){
-            nameError.innerText = ''
+
+        function validName(){
+          if(patt.test(name)){
+            nameError.innerText = 'Nombre válido'
             return true
-        }else{
-            nameError.innerText = 'Nombre malo'
+          }else{
+            nameError.innerText = 'Nombre NO válido'
+
+          }
         }
-    }
-    function validMessage(){
-    }
-    function validSubject(){
-    }
+
+        function validSubject(){
+          if(patt.test(subject)){
+            subjectError.innerText = 'Asunto válido'
+            return true
+          }else{
+            subjectError.innerText = 'Asunto NO válido'
+        
+          }
+        }
+
+        function validMessage(){
+          if(patt.test(message)){
+            messageError.innerText = 'Mensaje válido'
+            return true
+          }else{
+            messageError.innerText = 'Mensaje NO válido'
+          }
+        }
+      })
     </script>
 </body>
 
